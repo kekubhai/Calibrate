@@ -13,7 +13,8 @@ var upgrader=websocket.Upgrader {
 	},
 }
 func handler(w httpResponseWriter, r *httpRequest) {
-
+conn , err:=upgrader.Upgrade(w , r , nil)
+if err
 }
 func main (){
 	http.HandleFunc("w", handler){
