@@ -7,7 +7,6 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/gofiber/fiber/v2/log"
 	"github.com/gorilla/websocket"
 )
 
@@ -59,7 +58,7 @@ func main() {
 	}()
 
 	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Println("Type Something Here ..... \n")
+	fmt.Printf("Type Something Here ..... \n")
 	for scanner.Scan() {
 		text := scanner.Text()
 
