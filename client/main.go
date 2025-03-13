@@ -30,6 +30,7 @@ func main() {
 	done := make(chan struct{})
 	//Goroutines for reading Messages
 	go func() {
+		defer close(done)
 		for {
 			_, message, err := conn.ReadMessage()
 			if err != nil {
@@ -43,15 +44,28 @@ func main() {
 	///Go routines for sending Messages
 	go func() {
 		for {
-
+			select {
+			case msg := <-send:
+				//write in the websocket
+				err := conn.WriteMessage(msg.MessageType, msg.Data)
+				if err != nil {
+					log.Println("write ", err)
+					return
+				}
+			case <-done:
+				return
+			}
 		}
 	}()
 
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Println("Type Something Here ..... \n")
-	for scanner.Scan(){
-		text:=scanner.Text()
-		
-		send<-Message{websocket.TextMessage, []byte(text)}
+	for scanner.Scan() {
+		text := scanner.Text()
+
+		send <- Message{websocket.TextMessage, []byte(text)}
+	}
+	if err := scanner.Err(); err != nil {
+		log.Println(scanner.Err())
 	}
 }
