@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"net/url"
+	"os"
 
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gorilla/websocket"
@@ -39,5 +41,17 @@ func main() {
 	}()
 
 	///Go routines for sending Messages
+	go func() {
+		for {
 
+		}
+	}()
+
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Type Something Here ..... \n")
+	for scanner.Scan(){
+		text:=scanner.Text()
+		
+		send<-Message{websocket.TextMessage, []byte(text)}
+	}
 }
