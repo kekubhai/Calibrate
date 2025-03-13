@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-func main() {
+func connectToFinnhub() {
 	w, _, err := websocket.DefaultDialer.Dial("wss://ws.finnhub.io?token=cv96jhpr01qjq626urggcv96jhpr01qjq626urh0", nil)
 	if err != nil {
 		panic(err)
